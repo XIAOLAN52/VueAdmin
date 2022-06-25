@@ -135,19 +135,15 @@
           :data="permTreeData"
           show-checkbox
           node-key="id"
-          ref="permTree"
-          :check-strictly="true"
           :props="defaultProps"
           :default-expand-all="true"
         >
         </el-tree>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="permDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitPermFormHandle('permForm')"
-          >确 定</el-button
-        >
-      </span>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
     </el-dialog>
   </div>
 </template>
@@ -166,7 +162,7 @@ export default {
       current: 1,
 
       dialogVisible: false,
-      editForm: {}, //待修改的权限表单
+      editForm: {},
       editFormRules: {
         name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入唯一编码", trigger: "blur" }],
@@ -188,12 +184,7 @@ export default {
   },
   methods: {
     permHandle(id) {
-      //点击分配权限时
       this.permDialogVisible = true;
-      this.$axios.get("/sys/role/info" + id).then((res) => {
-        this.$refs.permTree.setCheckedKeys(res.data.data.menuIds); //原来已经有的权限需要勾选上
-        this.perForm = res.data.data; //权限表单默认会有 已有权限 因为后面需要提交
-      });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -298,27 +289,6 @@ export default {
           },
         });
       });
-    },
-    submitPermFormHandle(formName) {
-      //提交修分配权限表单
-      var menuIds = this.$refs.permTree.getCheckedKeys();
-
-      // console.log(menuIds); //查看选了哪些权限
-
-      this.$axios
-        .post("/sys/role/perm/" + this.permForm.id, menuIds)
-        .then((res) => {
-          this.$message({
-            showClose: true,
-            message: "恭喜你，操作成功",
-            type: "success",
-            onClose: () => {
-              this.getRoleList();
-            },
-          });
-          this.permDialogVisible = false;
-          this.resetForm(formName);
-        });
     },
   },
 };

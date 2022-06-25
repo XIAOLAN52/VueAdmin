@@ -136,7 +136,6 @@
           show-checkbox
           node-key="id"
           ref="permTree"
-          :check-strictly="true"
           :props="defaultProps"
           :default-expand-all="true"
         >
@@ -299,27 +298,26 @@ export default {
         });
       });
     },
-    submitPermFormHandle(formName) {
-      //提交修分配权限表单
-      var menuIds = this.$refs.permTree.getCheckedKeys();
+  },
+  submitPermFormHandle(formName) {//提交修分配权限表单
+    let menuIds = this.$refs.permTree.getCheckedKeys();
 
-      // console.log(menuIds); //查看选了哪些权限
+    console.log(menuIds);
 
-      this.$axios
-        .post("/sys/role/perm/" + this.permForm.id, menuIds)
-        .then((res) => {
-          this.$message({
-            showClose: true,
-            message: "恭喜你，操作成功",
-            type: "success",
-            onClose: () => {
-              this.getRoleList();
-            },
-          });
-          this.permDialogVisible = false;
-          this.resetForm(formName);
+    this.$axios
+      .post("/sys/role/perm/" + this.permForm.id, menuIds)
+      .then((res) => {
+        this.$message({
+          showClose: true,
+          message: "恭喜你，操作成功",
+          type: "success",
+          onClose: () => {
+            this.getRoleList();
+          },
         });
-    },
+        this.permDialogVisible = false;
+        this.resetForm(formName);
+      });
   },
 };
 </script>
