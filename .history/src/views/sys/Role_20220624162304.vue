@@ -132,9 +132,11 @@
     <el-dialog title="分配权限" :visible.sync="permDialogVisible" width="30%">
       <el-form :model="permForm">
         <el-tree
-          :data="permTreeData"
+          :data="data"
           show-checkbox
           node-key="id"
+          :default-expanded-keys="[2, 3]"
+          :default-checked-keys="[5]"
           :props="defaultProps"
         >
         </el-tree>
@@ -164,18 +166,10 @@ export default {
         statu: [{ required: true, message: "请选择状态", trigger: "blur" }],
       },
       permForm: {},
-      defaultProps: {
-        children: "children",
-        label: "label",
-      },
-      permTreeData: [],
     };
   },
   created() {
     this.getRoleList();
-    this.$axios.get("/sys/menu/list").then((res) => {
-      this.permTreeData = res.data.data;
-    });
   },
   methods: {
     permHandle(id) {

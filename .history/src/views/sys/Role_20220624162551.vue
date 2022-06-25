@@ -164,18 +164,14 @@ export default {
         statu: [{ required: true, message: "请选择状态", trigger: "blur" }],
       },
       permForm: {},
-      defaultProps: {
-        children: "children",
-        label: "label",
-      },
-      permTreeData: [],
+              defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
     };
   },
   created() {
     this.getRoleList();
-    this.$axios.get("/sys/menu/list").then((res) => {
-      this.permTreeData = res.data.data;
-    });
   },
   methods: {
     permHandle(id) {

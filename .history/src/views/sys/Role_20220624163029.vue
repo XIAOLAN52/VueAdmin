@@ -168,7 +168,7 @@ export default {
         children: "children",
         label: "label",
       },
-      permTreeData: [],
+      permTreeData: {},
     };
   },
   created() {

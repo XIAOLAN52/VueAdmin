@@ -168,14 +168,10 @@ export default {
         children: "children",
         label: "label",
       },
-      permTreeData: [],
     };
   },
   created() {
     this.getRoleList();
-    this.$axios.get("/sys/menu/list").then((res) => {
-      this.permTreeData = res.data.data;
-    });
   },
   methods: {
     permHandle(id) {
