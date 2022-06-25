@@ -1,2 +1,2 @@
 # VueAdmin-vue
-vue2+Java后天 一个模板
+a background for vue2 and Java
